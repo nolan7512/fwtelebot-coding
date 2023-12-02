@@ -153,7 +153,7 @@ async def main():
   # Kiểm tra xem bot có đang hoạt động hay không
   if bot_active:
     # Lắng nghe các sự kiện tin nhắn mới
-    client.loop()
+    client.run_until_disconnected()
 
     # Xử lý các lệnh điều khiển bot
     # for event in client.iter_messages(chats=your_channel_username):
@@ -164,7 +164,8 @@ async def main():
     #     bot_active = False
     #     print('Bot stopped')
 
+
 if __name__ == '__main__':
-  asyncio.run(main())
+  main()
 
 # client.run_until_disconnected()
