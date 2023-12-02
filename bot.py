@@ -143,12 +143,6 @@ async def main():
     global bot_active
     bot_active = True
     # Khởi tạo client
-    try:
-        # client = TelegramClient(StringSession(session_paths), api_id, api_hash)
-        # client.start()
-        # Nếu bạn không sử dụng client ở đây, bạn có thể bỏ comment vào đoạn mã trên
-    except OSError:
-        print('Failed to connect')
 
     # Chạy bot
     # Kiểm tra xem bot có đang hoạt động hay không
