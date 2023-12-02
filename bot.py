@@ -155,13 +155,13 @@ def main():
       client.loop()
 
     # Xử lý các lệnh điều khiển bot
-    for event in client.iter_messages(chats=your_channel_username):
-      if event.text.startswith('/startfw'):
-        bot_active = True
-        print('Bot started')
-      elif event.text.startswith('/stopfw'):
-        bot_active = False
-        print('Bot stopped')
+    # for event in client.iter_messages(chats=your_channel_username):
+    #   if event.text.startswith('/startfw'):
+    #     bot_active = True
+    #     print('Bot started')
+    #   elif event.text.startswith('/stopfw'):
+    #     bot_active = False
+    #     print('Bot stopped')
 
 if __name__ == '__main__':
   main()
