@@ -125,7 +125,8 @@ async def handle_list_channel_command(event):
 
 def main():
   # Khởi tạo biến
-  global bot_active = True
+  global bot_active
+  bot_active = True
   # Khởi tạo client
   try:
     client = TelegramClient(StringSession(session_paths), api_id, api_hash)
