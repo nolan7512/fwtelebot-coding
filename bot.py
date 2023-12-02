@@ -139,11 +139,11 @@ async def handle_list_channel_command(event):
 
 def main():
   # Khởi tạo biến
-  bot_active = False
+  global bot_active = True
   # Khởi tạo client
   try:
     client = TelegramClient(StringSession(session_paths), api_id, api_hash)
-    client.start(phone=phone_number, password=pass_code)
+    client.start()
   except OSError:
     print('Failed to connect')
 
