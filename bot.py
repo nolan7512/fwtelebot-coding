@@ -139,33 +139,33 @@ async def handle_list_channel_command(event):
     await event.respond(f"Danh sách các kênh hiện tại: {channel_list}")
 
 async def main():
-  # Khởi tạo biến
-  global bot_active
-  bot_active = True
-  # Khởi tạo client
-  # try:
-  #   client = TelegramClient(StringSession(session_paths), api_id, api_hash)
-  #   client.start()
-  # except OSError:
-  #   print('Failed to connect')
+    # Khởi tạo biến
+    global bot_active
+    bot_active = True
+    # Khởi tạo client
+    try:
+        # client = TelegramClient(StringSession(session_paths), api_id, api_hash)
+        # client.start()
+        # Nếu bạn không sử dụng client ở đây, bạn có thể bỏ comment vào đoạn mã trên
+    except OSError:
+        print('Failed to connect')
 
-  # Chạy bot
-  # Kiểm tra xem bot có đang hoạt động hay không
-  if bot_active:
-    # Lắng nghe các sự kiện tin nhắn mới
-    client.run_until_disconnected()
+    # Chạy bot
+    # Kiểm tra xem bot có đang hoạt động hay không
+    if bot_active:
+        # Lắng nghe các sự kiện tin nhắn mới
+        await client.run_until_disconnected()
 
-    # Xử lý các lệnh điều khiển bot
-    # for event in client.iter_messages(chats=your_channel_username):
-    #   if event.text.startswith('/startfw'):
-    #     bot_active = True
-    #     print('Bot started')
-    #   elif event.text.startswith('/stopfw'):
-    #     bot_active = False
-    #     print('Bot stopped')
-
+        # Xử lý các lệnh điều khiển bot
+        # for event in client.iter_messages(chats=your_channel_username):
+        #   if event.text.startswith('/startfw'):
+        #     bot_active = True
+        #     print('Bot started')
+        #   elif event.text.startswith('/stopfw'):
+        #     bot_active = False
+        #     print('Bot stopped')
 
 if __name__ == '__main__':
-  main()
+    asyncio.run(main())
 
 # client.run_until_disconnected()
