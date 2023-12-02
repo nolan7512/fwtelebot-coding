@@ -10,6 +10,7 @@ Created on Tue Nov  7 13:43:46 2023
 import os
 import logging
 import configparser
+import asyncio
 from telethon.sync import events,errors,TelegramClient
 from telethon.sessions import StringSession
 
@@ -164,6 +165,6 @@ async def main():
     #     print('Bot stopped')
 
 if __name__ == '__main__':
-      asyncio.run(main())
+  asyncio.run(main())
 
 # client.run_until_disconnected()
