@@ -149,11 +149,10 @@ def main():
   #   print('Failed to connect')
 
   # Chạy bot
-  while True:
-    # Kiểm tra xem bot có đang hoạt động hay không
-    if bot_active:
-      # Lắng nghe các sự kiện tin nhắn mới
-      client.loop()
+  # Kiểm tra xem bot có đang hoạt động hay không
+  if bot_active:
+    # Lắng nghe các sự kiện tin nhắn mới
+    client.loop()
 
     # Xử lý các lệnh điều khiển bot
     # for event in client.iter_messages(chats=your_channel_username):
@@ -165,6 +164,6 @@ def main():
     #     print('Bot stopped')
 
 if __name__ == '__main__':
-  main()
+      main()
 
 # client.run_until_disconnected()
