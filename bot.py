@@ -138,7 +138,7 @@ async def handle_list_channel_command(event):
     channel_list = ', '.join(channel_usernames)
     await event.respond(f"Danh sách các kênh hiện tại: {channel_list}")
 
-async def main():
+def main():
     # Khởi tạo biến
     global bot_active
     bot_active = True
@@ -148,7 +148,7 @@ async def main():
     # Kiểm tra xem bot có đang hoạt động hay không
     if bot_active:
         # Lắng nghe các sự kiện tin nhắn mới
-        await client.run_until_disconnected()
+        client.run_until_disconnected()
 
         # Xử lý các lệnh điều khiển bot
         # for event in client.iter_messages(chats=your_channel_username):
@@ -160,6 +160,7 @@ async def main():
         #     print('Bot stopped')
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    main()
+
 
 # client.run_until_disconnected()
