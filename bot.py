@@ -52,20 +52,6 @@ filter_mode = True  # Trạng thái chế độ lọc
 bot_active = True  # Biến để kiểm tra trạng thái hoạt động của bot
 status_message = "Bot Started, Filter mode: ON"
 
-
-try:
-
-  tempString = StringSession(session_paths)
-  logger.info(f'CONNECT TELEGRAM - SESSIONSTRING :\n{tempString}')
-  client = TelegramClient(tempString, api_id, api_hash)
-  client.start()
-  client.send_message(your_channel_username, "Bot đã chạy thành công!")
-  #client.start(bot_token=bot_token)
-  #client.connect()
-except OSError as e:
-  logger.info(f'Failed to connect :\n{e}')
-
-
 @client.on(events.NewMessage(chats=channel_usernames))
 async def forward_message(event):
     try:
