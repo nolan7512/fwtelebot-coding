@@ -149,7 +149,9 @@ def main():
     if bot_active:
         # Lắng nghe các sự kiện tin nhắn mới
         client.run_until_disconnected()
-
+        asyncio.sleep(36000)
+        client.disconnect()
+        asyncio.sleep(1)
         # Xử lý các lệnh điều khiển bot
         # for event in client.iter_messages(chats=your_channel_username):
         #   if event.text.startswith('/startfw'):
