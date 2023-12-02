@@ -8,13 +8,15 @@ Created on Tue Nov  7 13:43:46 2023
 
 
 import os
+import logging
 import configparser
 from telethon.sync import events,errors,TelegramClient
 from telethon.sessions import StringSession
 
 config = configparser.ConfigParser()
 config.read("/etc/secrets/secret_fwtelebot.env")
-
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Gán thông tin vào các biến
 api_id = int(config.get("TELEGRAM", "API_ID"))
@@ -52,14 +54,17 @@ status_message = "Bot Started, Filter mode: ON"
 
 
 try:
-    print('Starting connect')
-    client = TelegramClient(StringSession(session_paths), api_id, api_hash)
-    client.start(phone=phone_number, password=pass_code)
-    client.send_message(your_channel_username, "Bot đã chạy thành công!")
-    #client.start(bot_token=bot_token)
-    #client.connect()
-except OSError:
-    print('Failed to connect')
+
+  tempString = StringSession(session_paths)
+  logger.info(f'CONNECT TELEGRAM - SESSIONSTRING :\n{tempString}')
+  client = TelegramClient(tempString, api_id, api_hash)
+  client.start()
+  client.send_message(your_channel_username, "Bot đã chạy thành công!")
+  #client.start(bot_token=bot_token)
+  #client.connect()
+except OSError as e:
+  logger.info(f'Failed to connect :\n{e}')
+
 
 @client.on(events.NewMessage(chats=channel_usernames))
 async def forward_message(event):
