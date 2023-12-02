@@ -137,7 +137,7 @@ async def handle_list_channel_command(event):
     channel_list = ', '.join(channel_usernames)
     await event.respond(f"Danh sách các kênh hiện tại: {channel_list}")
 
-def main():
+async def main():
   # Khởi tạo biến
   global bot_active
   bot_active = True
@@ -164,6 +164,6 @@ def main():
     #     print('Bot stopped')
 
 if __name__ == '__main__':
-      main()
+      asyncio.run(main())
 
 # client.run_until_disconnected()
