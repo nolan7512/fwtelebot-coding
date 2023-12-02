@@ -8,20 +8,41 @@ Created on Tue Nov  7 13:43:46 2023
 
 
 import os
+import configparser
 from telethon.sync import events,errors,TelegramClient
 from telethon.sessions import StringSession
 
+config = configparser.ConfigParser()
+config.read("/etc/secrets/secret_fwtelebot.env")
 
-# from telethon import TelegramClient
-api_id = int(os.environ.get("API_ID", 0))
-api_hash = os.environ.get('API_HASH')
-channel_usernames = os.environ.get('CHANNEL_USERNAMES','').split(',')
-your_channel_username = os.environ.get('YOUR_CHANNEL_USERNAME')
-phone_number = int(os.environ.get("PHONE_NUMBER", 0))
-pass_code = int(os.environ.get("PASS_CODE", 0))
-bot_token = os.environ.get('BOT_TOKEN')
-#session_path = '/etc/secrets/bot_session_online.session'
-session_paths = os.environ.get('SESSION')
+
+# Gán thông tin vào các biến
+api_id = int(config.get("TELEGRAM", "API_ID"))
+api_hash = config.get("TELEGRAM", "API_HASH")
+channel_usernames = config.get("TELEGRAM", "CHANNEL_USERNAMES").split(",")
+your_channel_username = config.get("TELEGRAM", "YOUR_CHANNEL_USERNAME")
+phone_number = int(config.get("TELEGRAM", "PHONE_NUMBER"))
+pass_code = int(config.get("TELEGRAM", "PASS_CODE"))
+bot_token = config.get("TELEGRAM", "BOT_TOKEN")
+session_paths = config.get("TELEGRAM", "SESSION")
+
+
+
+
+# # from telethon import TelegramClient
+# api_id = int(os.environ.get("API_ID", 0))
+# api_hash = os.environ.get('API_HASH')
+# channel_usernames = os.environ.get('CHANNEL_USERNAMES','').split(',')
+# your_channel_username = os.environ.get('YOUR_CHANNEL_USERNAME')
+# phone_number = int(os.environ.get("PHONE_NUMBER", 0))
+# pass_code = int(os.environ.get("PASS_CODE", 0))
+# bot_token = os.environ.get('BOT_TOKEN')
+# #session_path = '/etc/secrets/bot_session_online.session'
+# session_paths = os.environ.get('SESSION')
+
+
+
+
 #session_paths ='./bot_session_online.session'
  # Danh sách các từ cần lọc
 filter_words = ['AUDCAD', 'AUDCHF', 'AUDJPY', 'AUDNZD', 'AUDUSD', 'CADCHF', 'CADJPY', 'CHFJPY', 'EURAUD', 'EURCAD', 'EURCHF', 'EURGBP', 'EURJPY', 'EURNZD', 'EURUSD', 'GBPAUD', 'GBPCAD', 'GBPCHF', 'GBPJPY', 'GBPNZD', 'GBPUSD', 'NZDCAD', 'NZDCHF', 'NZDJPY', 'NZDUSD', 'USDCAD', 'USDCHF', 'USDJPY', 'XAGUSD', 'XAUUSD', 'GOLD', 'AUS200', 'DE30', 'FR40', 'HK50', 'IN50', 'JP225', 'STOXX50', 'UK100', 'US30', 'US500', 'USTECH', 'USTEC', 'NAS100', 'AUD/CAD', 'AUD/CHF', 'AUD/JPY', 'AUD/NZD', 'AUD/USD', 'CAD/CHF', 'CAD/JPY', 'CHF/JPY', 'EUR/AUD', 'EUR/CAD', 'EUR/CHF', 'EUR/GBP', 'EUR/JPY', 'EUR/NZD', 'EUR/USD', 'GBP/AUD', 'GBP/CAD', 'GBP/CHF', 'GBP/JPY', 'GBP/NZD', 'GBP/USD', 'NZD/CAD', 'NZD/CHF', 'NZD/JPY', 'NZD/USD', 'USD/CAD', 'USD/CHF', 'USD/JPY', 'XAG/USD', 'XAU/USD']
@@ -111,4 +132,33 @@ async def handle_list_channel_command(event):
     channel_list = ', '.join(channel_usernames)
     await event.respond(f"Danh sách các kênh hiện tại: {channel_list}")
 
-client.run_until_disconnected()
+def main():
+  # Khởi tạo biến
+  bot_active = False
+  # Khởi tạo client
+  try:
+    client = TelegramClient(StringSession(session_paths), api_id, api_hash)
+    client.start(phone=phone_number, password=pass_code)
+  except OSError:
+    print('Failed to connect')
+
+  # Chạy bot
+  while True:
+    # Kiểm tra xem bot có đang hoạt động hay không
+    if bot_active:
+      # Lắng nghe các sự kiện tin nhắn mới
+      client.loop()
+
+    # Xử lý các lệnh điều khiển bot
+    for event in client.iter_messages(chats=your_channel_username):
+      if event.text.startswith('/startfw'):
+        bot_active = True
+        print('Bot started')
+      elif event.text.startswith('/stopfw'):
+        bot_active = False
+        print('Bot stopped')
+
+if __name__ == '__main__':
+  main()
+
+# client.run_until_disconnected()
